@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical test</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        /*text-align: center;*/
+        margin: 0;
+        padding: 0;
+        background-color: #3498db;
+	background: linear-gradient(to right, #ff9800, #ffeb3b);
+        color: white;
+    }
+    .timer-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 1000;
+        padding: 10px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		text-align:center;
+    }
+    .timer {
+        font-size: 24px;
+        color: #333;
+    }
+    .time-bar {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background-color: #2ecc71;
+        transition: width 1s linear, background-color 1s linear;
+    }
+    #instructionsPage, #testPage, #timeUpMessage {
+        margin-top: 100px;
+		position: relative;
+    }
+	
+    .button {
+        display: inline-block;
+        background-color: #e74c3c;
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+		
+    }
+	p{
+		text-align:center;
+	}
+    .button:hover {
+        background-color: #c0392b;
+    }
+    .hidden {
+        display: none;
+    }
+    .form-container {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+    iframe {
+        width: 100%;
+        height: calc(100vh - 200px);
+        max-height: 800px;
+        border: none;
+    }
+    table {
+        width: 90%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    th {
+        background-color: #1abc9c;
+        color: white;
+        text-align: left;
+    }
+    td {
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    .heading {
+        background-color: #2980b9;
+        color: white;
+        text-align: center;
+        font-size: 24px;
+        padding: 10px 0;
+    }
+    .sub-heading {
+        background-color: indianred;
+        color: white;
+        font-size: 18px;
+        text-align: center;
+		
+    }
+	#quiz{
+		position: absolute;
+		top: 47%;
+		right: 36%;
+		font-weight: bolder;
+		font-style: italic;
+		font-size: 40px;
+		color: lightgrey;
+	}
+	
+	.fullscreen-button {
+		position: fixed;
+		top: 20px;
+		right: 20px;
+		padding: 10px;
+		font-weight: bold;
+		background-color: grey;
+		color: black;
+		border: none;
+		cursor: pointer;
+		border-radius: 5px;
+		z-index: 1001; /* Ensure button is above other elements */
+	}
+
+	.fullscreen-button:hover {
+		background-color: #2980b9;
+	}
+	
+	/* Styling for the popup */
+	.popup {
+		display: none;
+		position: fixed;
+		z-index: 1001; /* Ensure popup is above other content */
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+	}
+
+	.popup-content {
+		background-color: #fefefe;
+		margin: 10% auto; /* Centered on the screen */
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+		max-width: 600px; /* Adjust width as needed */
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		position: relative;
+	}
+
+	.close {
+		position: absolute;
+    color: palevioletred;
+    float: right;
+    font-size: 43px;
+    font-weight: bold;
+    cursor: pointer;
+    top: 0%;
+    right: 18px;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.popup-button {
+		/* Style your button as needed */
+		    padding: 8px 16px;
+		    /* border: 2px solid black;*/
+		    border-radius: 5px;
+		    font-size: 14px;
+		    text-align: center;
+	}
+	.popup-button{
+		margin:auto;
+		display: flex;
+	}
+
+</style>
+</head>
+<body>
+    <div class="time-bar" id="timeBar"></div>
+
+    <div class="timer-container">
+        <div class="timer" id="countdown"></div>
+    </div>
+	<button class="fullscreen-button" onclick="enterFullscreen()">Fullscreen</button>
+    <div id="instructionsPage">
+        <!-- Replace with image and aligned text -->
+        <img src="https://cdn.prod.website-files.com/6417debf5aac655a56a357c4/6417e0887b8e0110e534befc_Careerpedia%20-%20Hi%20-%20Res.png" alt="Instructions Image" style="max-width: 100%; height: auto;">
+        <p id="quiz">Quiz.....</p>
+		<!-- <h2 class="heading">Read the below instructions carefully before attempting the test</h2> -->
+		 <button class="popup-button" onclick="openPopup()">Click here to see the instructions</button>
+		<div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2 class="heading">Instructions</h2>
+        <table>
+            <!-- Table content with aligned text -->
+			<tr>
+                <th class="sub-heading" colspan="2">General Instructions</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>This test consists of multiple sections and questions designed to assess your technical skills.</li>
+                        <li>You will have a total of 15 minutes and 30 seconds to complete the test.</li>
+                        <li>The timer will start once you click the "Start Test" button.</li>
+                        <li>Ensure you have a stable internet connection and a quiet environment to avoid any interruptions.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th class="sub-heading" colspan="2">Test Rules</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>Do not switch tabs or minimize the browser window during the test. Any such action will be considered malpractice and will result in the termination of your test.</li>
+                        <li>You are not allowed to use any external resources or seek help from others while taking the test.</li>
+                        <li>If you encounter any issues during the test, please notify the invigilator immediately.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th class="sub-heading" colspan="2">Timer and Progress</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>A countdown timer will be displayed at the top of the page to help you keep track of the remaining time.</li>
+                        <li>A progress bar will visually indicate the time elapsed. The color of the bar will change as the time decreases:</li>
+                        <ul>
+                            <li>Green: More than 40% of the time remaining.</li>
+                            <li>Yellow: Between 40% and 10% of the time remaining.</li>
+                            <li>Red: Less than 10% of the time remaining.</li>
+                        </ul>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th class="sub-heading" colspan="2">Submission</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>Make sure you submit all the questions before submitting the test,if the time is up your answers will not be recorded.</li>
+                        <li>Ensure you have completed all questions to the best of your ability before the timer ends.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th class="sub-heading" colspan="2">Important Reminders</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>Attempt all questions. Unanswered questions will be marked as incorrect.</li>
+                        <li>Stay focused and avoid any actions that could be construed as dishonest or disruptive.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+		 </div>
+    </div>
+        <p>
+        <button class="button" onclick="startTest()">Start Test</button>
+        </p>
+        <p>Best of Luck!</p>
+    </div>
+
+    <div id="testPage" class="hidden">
+        <h2 style="font-size: 50px; text-align:center;">Technical Test</h2>
+
+        <!-- Google Form Embed -->
+        <div class="form-container">
+	<!-- <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfOKrxu_vrYrB3O5nbWVVr4jemD7J7yYrOZki0ggiUI9ClT9w/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
+	<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfqlYT01usEGWUbDIEcLjYvfQqjbjOWeoQ5HrWTkJGANXebow/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>        
+	
+        </div>
+    </div>
+
+    <div id="timeUpMessage" style="text-align:center;"class="hidden">
+        <h2 style="font-size: 69px; color:darkred">Quiz ended!</h2>
+        <p style="font-size: 21px;" >Now click below to attempt</p>
+        <a href="https://www.hackerrank.com/test-1719287272" class="button" target="_blank" style="text-decoration:none;">Coding Test</a>
+    </div>
+
+<script>
+    var testStarted = false;
+    var testEnded = false;
+
+    window.addEventListener('beforeunload', function(event) {
+        if (testStarted && !testEnded) {
+            event.returnValue = 'Are you sure you want to leave? Your progress will be lost.';
+        }
+    });
+
+    function startTest() {
+        document.getElementById('instructionsPage').classList.add('hidden');
+        document.getElementById('testPage').classList.remove('hidden');
+        testStarted = true;
+		
+		//var timeLimit = 60000;
+        //var timeLimit = 15 * 60 * 1000 + 30 * 1000;
+	//var timeLimit = 1800000;
+	var timeLimit = 3000000; // 50 minutes in milliseconds
+        var endTime = Date.now() + timeLimit;
+
+        var countdownDisplay = document.getElementById('countdown');
+        var countdownInterval = setInterval(function() {
+            var remainingTime = endTime - Date.now();
+            var seconds = Math.ceil(remainingTime / 1000);
+
+            if (seconds <= 0 && !testEnded) {
+                clearInterval(countdownInterval);
+                countdownDisplay.textContent = 'Time\'s up!';
+                endTest();
+            } else if (seconds === 30 && !testEnded) {
+                playBeep();
+				//showMalpracticePopup();
+            } else if (seconds === 20 && !testEnded) {
+                playBeep();
+            } else if (seconds > 0 && !testEnded) {
+                var minutes = Math.floor(seconds / 60);
+                seconds = seconds % 60;
+                countdownDisplay.textContent = 'Time remaining: ' + minutes + 'm ' + (seconds < 10 ? '0' : '') + seconds + 's';
+            }
+            updateTimeBar(remainingTime, timeLimit);
+        }, 1000);
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden' && testStarted && !testEnded) {
+                if (document.hidden || document.webkitHidden || document.msHidden) {
+                    showMalpracticePopup();
+                }
+            }
+        });
+
+        var body = document.body;
+        if (body.requestFullscreen) {
+            body.requestFullscreen();
+        } else if (body.webkitRequestFullscreen) {
+            body.webkitRequestFullscreen();
+        } else if (body.msRequestFullscreen) {
+            body.msRequestFullscreen();
+        }
+    }
+
+    function showMalpracticePopup() {
+        testEnded = true;
+        alert('You have tried to engage in malpractice. The test is ending.\nThank you.');
+        endTest();
+    }
+
+    function endTest() {
+        testEnded = true;
+        document.getElementById('testPage').classList.add('hidden');
+        document.getElementById('timeUpMessage').classList.remove('hidden');
+        submitGoogleForm();
+    }
+
+    function updateTimeBar(remainingTime, totalTime) {
+        var elapsedPercentage = (totalTime - remainingTime) / totalTime * 100;
+        var timeBar = document.getElementById('timeBar');
+
+        if (elapsedPercentage <= 60) {
+            timeBar.style.backgroundColor = '#2ecc71';
+        } else if (elapsedPercentage > 60 && remainingTime > 20000) {
+            timeBar.style.backgroundColor = '#f1c40f';
+        } else {
+            timeBar.style.backgroundColor = '#e74c3c';
+        }
+        timeBar.style.width = elapsedPercentage + '%';
+    }
+
+    function submitGoogleForm() {
+        var form = document.querySelector('iframe');
+        //form.contentWindow.document.querySelector('form').submit();
+		var formDocument = form.contentWindow.document;
+
+		// Prevent the form from submitting automatically
+		formDocument.querySelector('form').addEventListener('submit', function(event) {
+			event.preventDefault(); // Prevent default form submission behavior
+		});
+		document.getElementById('timeUpMessage').classList.remove('hidden');
+    }
+
+    function playBeep() {
+        var beep = new Audio('submitmsg.mp3');
+        beep.play().catch(function(error) {
+            console.error('Failed to play beep sound:', error);
+        });
+    }
+	
+	function enterFullscreen() {
+		var elem = document.documentElement; // Get the root element of the document
+
+		if (elem.requestFullscreen) {
+			elem.requestFullscreen(); // Standard API for full screen
+		} else if (elem.webkitRequestFullscreen) {
+			elem.webkitRequestFullscreen(); // Webkit (Safari) browsers
+		} else if (elem.msRequestFullscreen) {
+			elem.msRequestFullscreen(); // Internet Explorer
+		}
+	}	
+	function openPopup() {
+		var popup = document.getElementById('popup');
+		popup.style.display = 'block';
+	}
+
+	function closePopup() {
+		var popup = document.getElementById('popup');
+		popup.style.display = 'none';
+	}
+
+
+</script>
+</body>
+</html>
