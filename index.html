@@ -288,16 +288,17 @@
         <!-- Google Form Embed -->
         <div class="form-container">
 	<!-- <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfOKrxu_vrYrB3O5nbWVVr4jemD7J7yYrOZki0ggiUI9ClT9w/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
-	<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdnChqNYkdiW3THRchboPBi2kGE4YsT-qFMq8aCc_vFPxby7g/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>        
+	<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScRLVec8P3Bno67pSRxuinaWYgSdZeEboHt6AGmlceCOFlzxw/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>        
 	
         </div>
     </div>
 
     <div id="timeUpMessage" style="text-align:center;"class="hidden">
         <h2 style="font-size: 69px; color:darkred">Quiz ended!</h2>
-	
+	    <p style="font-size: 21px;" >You can close the window</p>
+<!-- 	
         <p style="font-size: 21px;" >Now click below to attempt</p>
-        <a href="https://www.hackerrank.com/sql-coding-test/" class="button" target="_blank" style="text-decoration:none;">Coding Test</a>
+        <a href="https://www.hackerrank.com/sql-coding-test/" class="button" target="_blank" style="text-decoration:none;">Coding Test</a> -->
     </div>
 
 <script>
@@ -318,10 +319,10 @@
 		//var timeLimit = 60000;
         //var timeLimit = 15 * 60 * 1000 + 30 * 1000;
 	//var timeLimit = 1800000;
-	var timeLimit = 2400000; // 40 minutes in milliseconds
+	//var timeLimit = 2400000; // 40 minutes in milliseconds
 	
 	//var timeLimit = 1800000;// 40 minutes
-	//var timeLimit = 3000000; // 50 minutes in milliseconds
+	var timeLimit = 3000000; // 50 minutes in milliseconds
 	//var timeLimit = 3600000;//60 minutes
 
         var endTime = Date.now() + timeLimit;
